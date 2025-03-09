@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD!!!</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .back-image {
+            margin: 10px;
+        }
+        .front-text {
+            font-size: 5rem; 
+            font-family: 'Brush Script MT', cursive;
+        }
+        .flip-container {
+            perspective: 1000px;
+        }
+        .flipper {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            width: 400px;
+            height: 600px;
+        }
+        .front, .back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .front {
+            background-color: #fff;
+        }
+        .back {
+            background-color: #fff;
+            transform: rotateY(180deg);
+        }
+        .flipped {
+            transform: rotateY(180deg);
+        }
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+        /* Fade-in animation */
+        .fade-in {
+            opacity: 0;
+            animation: fade-in 2s forwards;
+        }
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen relative" style="background-image: url('bg.png'); background-size: cover; background-position: center;"></body>
+    <div class="flip-container">
+        <div class="flipper">
+            <div class="front bg-white border border-gray-300 shadow-md flex items-center justify-center">
+                <div class="front-text">
+                    <p class="text-4xl fade-in">Happy Birthday to You!!!</p>
+                </div>
+            </div>
+            <div class="back bg-white border border-gray-300 shadow-md flex items-center justify-center">
+                <div class="w-full h-full flex flex-col items-center justify-center">
+                    <div class="back-image ml-4 mr-4">
+                        <img src="image.png" alt="Back Image" class="w-22 object-cover mb-2">
+                    </div>
+                    <p class="text-center text-sm">09 - 03 - 2025</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="flipButton" class="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
+        <i class="fa-solid fa-cake-candles mr-2"></i> Flip Paper
+    </button>
+
+    <script>
+        document.getElementById('flipButton').addEventListener('click', function() {
+            const flipper = document.querySelector('.flipper');
+            flipper.classList.toggle('flipped');
+
+            // Create multiple fireworks
+            for (let i = 0; i < 10; i++) {
+                createFirework();
+            }
+        });
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+
+            // Random position
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+
+            // Set initial position
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+
+            // Random color
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Append to body
+            document.body.appendChild(firework);
+
+            // Remove after animation
+            firework.addEventListener('animationend', () => {
+                firework.remove();
+            });
+        }
+    </script>
+</body>
+</html>
